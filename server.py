@@ -13,7 +13,7 @@ class MyServer(BaseHTTPRequestHandler):
         print (link)
         l1=""
         html=""
-        url = link.split("#")
+        url = link.split("&")
         if len(url)>1 :
               l1=url[1]
               with urllib.request.urlopen(l1) as response:

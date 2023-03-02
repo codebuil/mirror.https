@@ -21,11 +21,13 @@ class MyServer(BaseHTTPRequestHandler):
         if len(url)>1 :
               l1=url[1]
               with urllib.request.urlopen(l1) as response:
-                   html = response.read().decode()
-                   if url[1].find(".htm")>1:
+                   if l1.find(".png")<1 and l1.find(".jpg")<1 and l1.find(".bmp")<1:
+                        html = response.read().decode()
                         html=html.replace("https://","rrr1234567890://"+ip_address+":"+str(PORTs)+"/&rrr1234567890s://")
+                        html=html.replace("./","rrr1234567890://"+ip_address+":"+str(PORTs)+"/&rrr1234567890s://")
                         html=html.replace("rrr1234567890","http")
-
+                   else:
+                        html = response.read().decode()
         
         # Converte a string para bytes antes de enviá-la como resposta
         self.wfile.write(bytes(html, "utf8"))

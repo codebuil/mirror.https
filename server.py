@@ -22,6 +22,8 @@ class MyServer(BaseHTTPRequestHandler):
         ll1=-1
         ll2=-1
         ll3=-1
+        ll4=-1
+        
 
         try:
             ll1=l1.find(".png")
@@ -37,12 +39,16 @@ class MyServer(BaseHTTPRequestHandler):
             ll3=l1.find(".bmp")
         except:
             ll3=-1
+        try:
+            ll4=l1.find(".jpeg")
+        except:
+            ll4=-1
 
         try:
             if len(url)>1 :
                   l1=url[1]
                   with urllib.request.urlopen(l1) as response:
-                       if ll1>-1 or ll2>-1 or ll3>-1:
+                       if ll1>-1 or ll2>-1 or ll3>-1 or ll4>-1:
                            response = requests.get(l1)
                            self.send_response(200)
                            self.send_header('Content-Type', 'image/png')

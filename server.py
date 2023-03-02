@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.request
 import socket
+import requests
+
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -12,7 +14,7 @@ class MyServer(BaseHTTPRequestHandler):
 
         # Configura a resposta como uma string contendo código 
         link = self.path[1:]
-        
+        link=link.replace(" HTTP/1.1","")
         l1=link
         html=""
         url = link.split("&")
@@ -41,11 +43,12 @@ class MyServer(BaseHTTPRequestHandler):
                   l1=url[1]
                   with urllib.request.urlopen(l1) as response:
                        if ll1>-1 or ll2>-1 or ll3>-1:
-                           print ("#")
+                           response = requests.get(l1)
                            self.send_response(200)
                            self.send_header('Content-Type', 'image/png')
                            self.end_headers()
                            self.wfile.write(response.content)
+                           print ("#")
                        else:
                            self.send_response(200)
                            self.send_header('Content-type', 'text/html')
@@ -60,9 +63,7 @@ class MyServer(BaseHTTPRequestHandler):
 
                         
         except:
-            try:
-                self.wfile.write(bytes(html, "utf8"))
-            except:
+           
                print ("error")
         return
 

@@ -12,15 +12,27 @@ class MyServer(BaseHTTPRequestHandler):
 
         # Configura a resposta como uma string contendo código 
         link = self.path[1:]
-        print (link)
+        
         l1=""
         html=""
         url = link.split("&")
+        ll1=-1
+        ll2=-1
+        ll3=-1
+        try:
+            ll1=l1.find(".png")
+            ll2=l1.find(".jpg")
+            ll3=l1.find(".bmp")
+        except:
+            ll1=-1
+            ll2=-1
+            ll3=-1
+                
         try:
             if len(url)>1 :
                   l1=url[1]
                   with urllib.request.urlopen(l1) as response:
-                       if l1.find(".png")<1 and l1.find(".jpg")<1 and l1.find(".bmp")<1:
+                       if ll1<1 and ll2<1 and ll3<1:
                            self.send_response(200)
                            self.send_header('Content-type', 'text/html')
                            self.end_headers()
@@ -35,12 +47,9 @@ class MyServer(BaseHTTPRequestHandler):
                            self.send_response(200)
                            self.send_header('Content-Type', 'image/png')
                            self.end_headers()
-                           hostname = socket.gethostname()
-                           ip_address = socket.gethostbyname(hostname)
                            html = response.read().decode()
-        
-                           # Converte a string para bytes antes de enviá-la como resposta
                            self.wfile.write(bytes(html, "utf8"))
+                        
         except:
             try:
                 self.wfile.write(bytes(html, "utf8"))

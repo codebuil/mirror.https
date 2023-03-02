@@ -23,7 +23,7 @@ class MyServer(BaseHTTPRequestHandler):
               with urllib.request.urlopen(l1) as response:
                    html = response.read().decode()
                    if url[1].find(".htm")>1:
-                        html=html.replace("http://","rrr1234567890://"+ip_address+":"+str(PORTs)+"/&rrr1234567890s://")
+                        html=html.replace("https://","rrr1234567890://"+ip_address+":"+str(PORTs)+"/&rrr1234567890s://")
                         html=html.replace("rrr1234567890","http")
 
         

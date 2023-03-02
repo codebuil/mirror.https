@@ -13,26 +13,40 @@ class MyServer(BaseHTTPRequestHandler):
         # Configura a resposta como uma string contendo código 
         link = self.path[1:]
         
-        l1=""
+        l1=link
         html=""
         url = link.split("&")
+        
         ll1=-1
         ll2=-1
         ll3=-1
+
         try:
             ll1=l1.find(".png")
-            ll2=l1.find(".jpg")
-            ll3=l1.find(".bmp")
         except:
             ll1=-1
+
+        try:
+            ll2=l1.find(".jpg")
+        except:
             ll2=-1
+
+        try:
+            ll3=l1.find(".bmp")
+        except:
             ll3=-1
-                
+
         try:
             if len(url)>1 :
                   l1=url[1]
                   with urllib.request.urlopen(l1) as response:
-                       if ll1<1 and ll2<1 and ll3<1:
+                       if ll1>-1 or ll2>-1 or ll3>-1:
+                           print ("#")
+                           self.send_response(200)
+                           self.send_header('Content-Type', 'image/png')
+                           self.end_headers()
+                           self.wfile.write(response.content)
+                       else:
                            self.send_response(200)
                            self.send_header('Content-type', 'text/html')
                            self.end_headers()
@@ -43,12 +57,7 @@ class MyServer(BaseHTTPRequestHandler):
                            html=html.replace("./","rrr1234567890://"+ip_address+":"+str(PORTs)+"/&rrr1234567890s://")
                            html=html.replace("rrr1234567890","http")
                            self.wfile.write(bytes(html, "utf8"))
-                       else:
-                           self.send_response(200)
-                           self.send_header('Content-Type', 'image/png')
-                           self.end_headers()
-                           html = response.read().decode()
-                           self.wfile.write(bytes(html, "utf8"))
+
                         
         except:
             try:

@@ -7,9 +7,6 @@ class MyServer(BaseHTTPRequestHandler):
         # Configura a resposta HTTP
         
         PORTs = 8080
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
         hostname = socket.gethostname()
         ip_address = socket.gethostbyname(hostname)
 
